@@ -9,7 +9,7 @@ in IEEE Transactions on Geoscience and Remote Sensing, doi: 10.1109/TGRS.2023.32
 https://doi.org/10.1109/TGRS.2023.3273329
 
 ## Description
-This repository contains an implementation of the representations in python using pytorch.
+This repository contains an implementation of the representations in python using pytorch. The representations are designed to represent any vector ***v*** and its negative ***-v*** as the same vector, while also being continuous. The representations are designed to be used as neural network outputs.
 
 The functions in the repository transform 3D vectors ***v*** to representations ***r*** for a batches of vectors of shape [batch, vector, ...], where the operation is broadcast along the batch dimension and any other following dimensions.
 
