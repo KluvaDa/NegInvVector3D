@@ -35,3 +35,6 @@ The following are the implemented representations:
   - Requires 6 dimensions
 
 Functions are named `vector_2_[representation]` and `[representation]_2_vector`, where `[representation]` is replaced with the name of the representaiton.
+
+## Installation
+`pip install git+https://github.com/KluvaDa/NegInvVector3D.git`
