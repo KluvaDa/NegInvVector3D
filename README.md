@@ -1,5 +1,5 @@
-# NIV - Negation Invariant Vectors
-### Negation Invariant Representations of 3D Vectors
+# NegInvVector3D
+## Negation Invariant Representations of 3D Vectors
 This repository accompanies the following paper published in IEEE TGRS (Transactions on Geoscience and Remote Sensing):
 
 D. Kluvanec, K. J. W. McCaffrey, T. B. Phillips and N. A. Moubayed,
