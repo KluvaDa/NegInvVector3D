@@ -241,7 +241,7 @@ def projection_doubleangle_2_vector(r: torch.Tensor):
     return v
 
 
-def vector_2_piecewise_align(v: torch.Tensor):
+def vector_2_piecewise_aligned(v: torch.Tensor):
     """
     Piecewise-Aligned representation
     v has shape (batch, 3, ...)
@@ -254,7 +254,7 @@ def vector_2_piecewise_align(v: torch.Tensor):
 
 
 @nan_to_zero
-def piecewise_align_2_vector(r: torch.Tensor):
+def piecewise_aligned_2_vector(r: torch.Tensor):
     """
     Piecewise-Aligned representation
     r has shape (batch, 9, ...)
