@@ -1,5 +1,5 @@
 import torch
-import niv
+import neginvvector3d as niv
 
 if __name__ == '__main__':
     batch_size = 1000
