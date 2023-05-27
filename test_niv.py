@@ -13,7 +13,7 @@ if __name__ == '__main__':
                 (niv.vector_2_dip90_strike360, niv.dip90_strike360_2_vector),
                 (niv.vector_2_dip180_strike180, niv.dip180_strike180_2_vector),
                 (niv.vector_2_projection_doubleangle, niv.projection_doubleangle_2_vector),
-                (niv.vector_2_piecewise_align, niv.piecewise_align_2_vector),
+                (niv.vector_2_piecewise_aligned, niv.piecewise_aligned_2_vector),
                 (niv.vector_2_classification_dip_strike, niv.classification_dip_strike_2_vector),
                 (niv.vector_2_classification_icosahedron, niv.classification_icosahedron_2_vector),
                 (niv.vector_2_saxena, niv.saxena_2_vector)
