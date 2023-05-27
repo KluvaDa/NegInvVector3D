@@ -24,11 +24,12 @@ def vector_2_doubleangle(v: torch.Tensor):
     v has shape (batch, 2, ...)
     returns a tensor of shape (batch, 2, ...)
     """
+    magnitude = torch.norm(v, dim=1, keepdim=True)
     x, y = v[:, 0:1, ...], v[:, 1:2, ...]
     x2, y2 = x**2, y**2
     doubleangle_0 = (x2 - y2) / (x2 + y2)
     doubleangle_1 = (2*x*y) / (x2 + y2)
-    return torch.cat([doubleangle_0, doubleangle_1], dim=1)
+    return torch.cat([doubleangle_0 * magnitude, doubleangle_1 * magnitude], dim=1)
 
 
 @nan_to_zero
@@ -43,7 +44,7 @@ def doubleangle_2_vector(r: torch.Tensor):
     magnitude = torch.norm(r, dim=1, keepdim=True)
     x = torch.sqrt(0.5 + r0 / (2 * magnitude))
     y = _sign(r1) * torch.sqrt(0.5 - r0 / (2 * magnitude))
-    return torch.cat([x, y], dim=1)
+    return torch.cat([x * magnitude, y * magnitude], dim=1)
 
 
 def vector_align(v: torch.Tensor, dim: int):
@@ -177,9 +178,9 @@ def vector_2_projection_doubleangle(v: torch.Tensor):
     v_xz = v_normalised[:, (0, 2), ...]
     v_xy = v_normalised[:, (0, 1), ...]
 
-    r_yz = vector_2_doubleangle(v_yz) * torch.norm(v_yz, dim=1, keepdim=True)
-    r_xz = vector_2_doubleangle(v_xz) * torch.norm(v_xz, dim=1, keepdim=True)
-    r_xy = vector_2_doubleangle(v_xy) * torch.norm(v_xy, dim=1, keepdim=True)
+    r_yz = vector_2_doubleangle(v_yz)
+    r_xz = vector_2_doubleangle(v_xz)
+    r_xy = vector_2_doubleangle(v_xy)
 
     return torch.cat([r_yz, r_xz, r_xy], dim=1)
 
@@ -198,10 +199,6 @@ def projection_doubleangle_2_vector(r: torch.Tensor):
     v_yz = doubleangle_2_vector(r_yz)
     v_xz = doubleangle_2_vector(r_xz)
     v_xy = doubleangle_2_vector(r_xy)
-
-    m_yz = torch.norm(r_yz, dim=1, keepdim=True)
-    m_xz = torch.norm(r_xz, dim=1, keepdim=True)
-    m_xy = torch.norm(r_xy, dim=1, keepdim=True)
 
     magnitude_x = torch.abs(v_xz[:, 0:1, ...]) + torch.abs(v_xy[:, 0:1, ...])
     magnitude_y = torch.abs(v_yz[:, 0:1, ...]) + torch.abs(v_xy[:, 1:2, ...])
@@ -224,12 +221,12 @@ def projection_doubleangle_2_vector(r: torch.Tensor):
     s_xz = s_xz * 2 - 1
     s_xy = s_xy * 2 - 1
 
-    y_yz = m_yz * s_yz * v_yz[:, 0:1, ...]
-    z_yz = m_yz * s_yz * v_yz[:, 1:2, ...]
-    x_xz = m_xz * s_xz * v_xz[:, 0:1, ...]
-    z_xz = m_xz * s_xz * v_xz[:, 1:2, ...]
-    x_xy = m_xy * s_xy * v_xy[:, 0:1, ...]
-    y_xy = m_xy * s_xy * v_xy[:, 1:2, ...]
+    y_yz = s_yz * v_yz[:, 0:1, ...]
+    z_yz = s_yz * v_yz[:, 1:2, ...]
+    x_xz = s_xz * v_xz[:, 0:1, ...]
+    z_xz = s_xz * v_xz[:, 1:2, ...]
+    x_xy = s_xy * v_xy[:, 0:1, ...]
+    y_xy = s_xy * v_xy[:, 1:2, ...]
 
     x = (x_xz + x_xy) / 2
     y = (y_yz + y_xy) / 2
